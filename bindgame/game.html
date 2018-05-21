@@ -42,6 +42,9 @@
 			var context=canvas.getContext('2d')
 			g.canvas=canvas
 			g.context=context
+			g.drawImage=function(Image){
+				g.context.drawImage(Image.image,Image.x,Image.y)
+			}
 
 			//event
             window.addEventListener('keydown',function(event){
@@ -78,9 +81,15 @@
 			game.registerAction('d',function(){
 				bond.moveRight()
 			})
+			//update
+			game.update=function(){
+
+			}
+			//draw
             game.draw=function(){
-            	game.context.drawImage(bond.image,bond.x,bond.y)
-        }
+            	game.drawImage(bond)
+
+            }
     }
     __main()
     </script>
