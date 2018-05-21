@@ -23,7 +23,7 @@
 				image: image,
 				x:  200,
 				y: 600,
-				speed:  3,
+				speed:  10,
 			}
 			o.moveLeft=function(){
 				this.x-=this.speed
@@ -31,67 +31,123 @@
 			o.moveRight=function(){
 				this.x+=this.speed
 			}
+			o.collide=function(ball) {
+				if(ball.y+ball.image.height>o.y) {
+					if(ball.x>o.x && ball.x<o.x+o.image.width){
+                         log('carsh')
+                         return true
+					}
+				}
+
+
+			}
 			return o
 		}
-		var Game=function(){
-			var g={
-				actions: {},
-				keydowns: {},
+		var Ball=function(){
+			var image=imageFrompPath('images/qiu.png')
+			var o={
+				image: image,
+				x:  200,
+				y: 600,
+				speedX: 5,
+				speedY:5, 
+				fired: false,
 			}
-			var canvas=document.querySelector('#id-canvas')
-			var context=canvas.getContext('2d')
-			g.canvas=canvas
-			g.context=context
-			g.drawImage=function(Image){
-				g.context.drawImage(Image.image,Image.x,Image.y)
+			o.move=function(){			
+				if(o.fired) {
+				if(o.x<0||o.x+o.image.width>800)
+				{
+					o.speedX=-o.speedX
+				}
+				if(o.y<0||o.y+o.image.height>800)
+				{
+					o.speedY=-o.speedY
+				}
+
+				o.x+=o.speedX
+				o.y+=o.speedY
 			}
 
+		}
+		o.fire=function() {
+			o.fired=true
+		}
+
+		
+		return o
+	}
+	var Game=function() {
+		var g={
+			actions: {},
+			keydowns: {},
+		}
+		var canvas=document.querySelector('#id-canvas')
+		var context=canvas.getContext('2d')
+		g.canvas=canvas
+		g.context=context
+		g.drawImage=function(Image) {
+			g.context.drawImage(Image.image,Image.x,Image.y)
+		}
+
 			//event
-            window.addEventListener('keydown',function(event){
-            	g.keydowns[event.key]=true
-            })
-            window.addEventListener('keyup',function(event){
-            	g.keydowns[event.key]=false
-            })
-            g.registerAction=function(key,callback){
-            	g.actions[key]=callback
-            }
+			window.addEventListener('keydown',function(event){
+				g.keydowns[event.key]=true
+			})
+			window.addEventListener('keyup',function(event){
+				g.keydowns[event.key]=false
+			})
+			g.registerAction=function(key,callback){
+				g.actions[key]=callback
+			}
+			g.registerAction=function(key,callback){
+				g.actions[key]=callback
+			}
+
             //timer
-			setInterval(function(){
+            setInterval(function() {
 				//update event
 				var actions=Object.keys(g.actions)
 				for (var i = 0; i <actions.length; i++) {
 					var key=actions[i]
 					if(g.keydowns[key])
 						g.actions[key]()
-					}
+				}
 				//clare
 				context.clearRect(0,0,canvas.width,canvas.height)
+				g.update()
 				//draw
 				g.draw()
 			}, 10)
-			return g;
-		}
-		var __main=function(){
-			var game=Game();
-			var bond=Bond()			
-			game.registerAction('a',function(){
-				bond.moveLeft()
-			})
-			game.registerAction('d',function(){
-				bond.moveRight()
-			})
+            return g;
+        }
+        var __main=function() {
+        	var game = Game();
+        	var bond = Bond()	
+        	var ball = Ball()		
+        	game.registerAction('a',function() {
+        		bond.moveLeft()
+        	})
+        	game.registerAction('d',function() {
+        		bond.moveRight()
+        	})
+        	game.registerAction('f',function() {
+        		ball.fire()
+        	})
 			//update
-			game.update=function(){
-
+			game.update=function() {
+				ball.move()
+				//crashs
+				if(bond.collide(ball)){
+					ball.speedY=-ball.speedY
+				}
 			}
 			//draw
-            game.draw=function(){
-            	game.drawImage(bond)
-
-            }
-    }
-    __main()
-    </script>
+			game.draw=function() {
+				game.drawImage(bond)
+				game.drawImage(ball)
+			}
+		}
+		__main()
+	</script>
 </body>
 </html>
