@@ -34,8 +34,8 @@
 			o.collide=function(ball) {
 				if(ball.y+ball.image.height>o.y) {
 					if(ball.x>o.x && ball.x<o.x+o.image.width){
-                         log('carsh')
-                         return true
+						log('carsh')
+						return true
 					}
 				}
 
@@ -55,39 +55,69 @@
 			}
 			o.move=function(){			
 				if(o.fired) {
-				if(o.x<0||o.x+o.image.width>800)
-				{
-					o.speedX=-o.speedX
-				}
-				if(o.y<0||o.y+o.image.height>800)
-				{
-					o.speedY=-o.speedY
+					if(o.x<0||o.x+o.image.width>800)
+					{
+						o.speedX=-o.speedX
+					}
+					if(o.y<0||o.y+o.image.height>800)
+					{
+						o.speedY=-o.speedY
+					}
+
+					o.x+=o.speedX
+					o.y+=o.speedY
 				}
 
-				o.x+=o.speedX
-				o.y+=o.speedY
+			}
+			o.fire=function() {
+				o.fired=true
 			}
 
-		}
-		o.fire=function() {
-			o.fired=true
-		}
 
-		
-		return o
-	}
-	var Game=function() {
-		var g={
-			actions: {},
-			keydowns: {},
+			return o
 		}
-		var canvas=document.querySelector('#id-canvas')
-		var context=canvas.getContext('2d')
-		g.canvas=canvas
-		g.context=context
-		g.drawImage=function(Image) {
-			g.context.drawImage(Image.image,Image.x,Image.y)
+		var rectIntersects = function (a,b) {
+			if(b.y > a.y && b.y < a.y + a.image.height ) {
+				if(b.x > a.x && b.x < a.x + a.image.width ){
+					log('carsh')
+					return true
+				}
+			}
+			return false
 		}
+		var Block=function(){
+			var image=imageFrompPath('images/block.png')
+
+			var o={
+				image: image,
+				x: 100,
+				y: 100,
+				width: 47,
+				height: 43,
+				alive: true
+			}
+			o.kill = function() {
+				o.alive = false
+			}
+			o.collide=function(ball) {
+				if (rectIntersects(o,ball)||rectIntersects(ball,o)) {
+					return true
+				}
+			}
+			return o
+		}
+		var Game=function() {
+			var g={
+				actions: {},
+				keydowns: {},
+			}
+			var canvas=document.querySelector('#id-canvas')
+			var context=canvas.getContext('2d')
+			g.canvas=canvas
+			g.context=context
+			g.drawImage=function(Image) {
+				g.context.drawImage(Image.image,Image.x,Image.y)
+			}
 
 			//event
 			window.addEventListener('keydown',function(event){
@@ -121,9 +151,11 @@
             return g;
         }
         var __main=function() {
-        	var game = Game();
+        	var game = Game()
+
         	var bond = Bond()	
-        	var ball = Ball()		
+        	var ball = Ball()	
+        	var  block = Block()
         	game.registerAction('a',function() {
         		bond.moveLeft()
         	})
@@ -140,11 +172,15 @@
 				if(bond.collide(ball)){
 					ball.speedY=-ball.speedY
 				}
+				if (block.collide(ball)) {
+					block.kill()
+				}
 			}
 			//draw
 			game.draw=function() {
 				game.drawImage(bond)
 				game.drawImage(ball)
+				game.drawImage(block)
 			}
 		}
 		__main()
