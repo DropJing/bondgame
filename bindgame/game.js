@@ -1,18 +1,17 @@
 var Game=function(fps) {
-			var g={
-				actions: {},
-				keydowns: {},
-			}
-			var canvas=document.querySelector('#id-canvas')
-			var context=canvas.getContext('2d')
+	var g={
+		actions: {},
+		keydowns: {},
+	}
+	var canvas=document.querySelector('#id-canvas')
+	var context=canvas.getContext('2d')
 
-			g.canvas=canvas
-			g.context=context
+	g.canvas=canvas
+	g.context=context
 
-			g.drawImage=function(Image) {
-				g.context.drawImage(Image.image,Image.x,Image.y)
-			}
-
+	g.drawImage=function(Image) {
+		g.context.drawImage(Image.image,Image.x,Image.y)
+	}
 			//event
 			window.addEventListener('keydown',function(event){
 				g.keydowns[event.key]=true
@@ -20,11 +19,7 @@ var Game=function(fps) {
 			window.addEventListener('keyup',function(event){
 				g.keydowns[event.key]=false
 			})
-			window.addEventListener('keyup',function(event){
-				if(event.key == 'p') {
-					pausd = !pausd
-				}
-			})
+			
 			g.registerAction=function(key,callback){
 				g.actions[key]=callback
 			}
