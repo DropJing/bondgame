@@ -17,7 +17,10 @@
 
 </head>
 <body>
-	<canvas id="id-canvas" width="800" height="800"></canvas>
+	<canvas id="id-canvas" width="800" height="800">
+	</canvas>
+	<hr>
+	<input id="id-input-speed" type="range" value="1">
 	<script type="text/javascript">
 		var log=console.log.bind(console)
 
@@ -28,13 +31,19 @@
 			var blocks = []
 			for (var i = 0; i < level.length; i++) {
 				var p = level[i]
-				log(p)
 				var b =  Block(p)
 				blocks.push(b)
 			}
 			return blocks
 		}
+		//control speed
+		document.querySelector('#id-input-speed').addEventListener('input',function() {
+			var input = event.target
+			window.fps = Number(input.value)
+			//log(event,input.value)
+		})
 		
+
 		
 		
 		var __main=function() {
@@ -78,6 +87,8 @@
 				for (var i = 0; i < blocks.length; i++) {
 					var block = blocks[i]
 					if (block.collide(ball)) {
+						ball.speedY=-ball.speedY
+						ball.speedX=-ball.speedX
 						block.kill()
 					}
 				}

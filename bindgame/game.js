@@ -23,22 +23,29 @@ var Game=function(fps) {
 			g.registerAction=function(key,callback){
 				g.actions[key]=callback
 			}
+			window.fps = 30
+			var runloop = function() {
+				log(window.fps)
+            	//update event
+            	var actions=Object.keys(g.actions)
 
-            //timer
-            setInterval(function() {
-				//update event
-				var actions=Object.keys(g.actions)
-
-				for (var i = 0; i <actions.length; i++) {
-					var key=actions[i]
-					if(g.keydowns[key])
-						g.actions[key]()
-				}
+            	for (var i = 0; i <actions.length; i++) {
+            		var key=actions[i]
+            		if(g.keydowns[key])
+            			g.actions[key]()
+            	}
 				//clare
 				context.clearRect(0,0,canvas.width,canvas.height)
 				g.update()
 				//draw
 				g.draw()
-			}, fps)
+				setTimeout(function() {
+					runloop()
+				}, window.fps)
+			}
+            //timer
+            setTimeout(function() {
+            	runloop()
+            }, fps)
             return g;
         }

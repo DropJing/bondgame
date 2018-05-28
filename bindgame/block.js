@@ -9,16 +9,19 @@ var Block=function(position){
 		y: p[1] ,
 		width: 47,
 		height: 43,
-		alive: true
+		alive: true,
+		lifes: p[2] || 1 ,
 	}
 	o.kill = function() {
-		o.alive = false
+		o.lifes--
+		if (o.lifes <= 0) {
+			o.alive = false
+		}
+		
 	}
 	o.collide = function(ball) {
 		if(o.alive) {
-			if (rectIntersects(o,ball)||rectIntersects(ball,o) ) {
-				return true
-			}
+			return rectIntersects(ball,o)
 		}
 	}
 	return o
