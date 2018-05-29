@@ -8,6 +8,7 @@ var Game=function(fps) {
 
 	g.canvas=canvas
 	g.context=context
+	context.font = "24px serif";
 
 	g.drawImage=function(Image) {
 		g.context.drawImage(Image.image,Image.x,Image.y)
@@ -25,7 +26,6 @@ var Game=function(fps) {
 			}
 			window.fps = 30
 			var runloop = function() {
-				log(window.fps)
             	//update event
             	var actions=Object.keys(g.actions)
 

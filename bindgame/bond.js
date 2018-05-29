@@ -1,11 +1,11 @@
 var Bond=function(){
-			var image=imageFrompPath('images/bond.png')
-			var o={
-				image: image,
-				x:  200,
-				y: 700,
-				speed:  10,
-			}
+	var image=imageFrompPath('images/bond.png')
+	var o={
+		image: image,
+		x:  200,
+		y: 700,
+		speed:  10,
+	}
 			//控制边界
 			o.movelimit = function(x) {
 				if(o.x < 0) {
@@ -23,11 +23,7 @@ var Bond=function(){
 				o.movelimit(o.x + o.speed)
 			}
 			o.collide=function(ball) {
-				if(ball.y+ball.image.height>o.y) {
-					if(ball.x>o.x && ball.x < o.x+o.image.width){
-						return true
-					}
-				}
+				return rectIntersects(ball,o)
 			}
 			return o
 		}
