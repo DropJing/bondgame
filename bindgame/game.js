@@ -45,7 +45,9 @@ var Game=function(fps) {
 			}
             //timer
             setTimeout(function() {
+
             	runloop()
+            	
             }, fps)
             return g;
         }

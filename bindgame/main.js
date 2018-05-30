@@ -1,22 +1,18 @@
-		var log=console.log.bind(console)
-
-
-		var loadlevel = function(n) {
-			var n = n-1
-			var level = levels[n]
-			var blocks = []
-			for (var i = 0; i < level.length; i++) {
-				var p = level[i]
-				var b =  Block(p)
-				blocks.push(b)
-			}
-			return blocks
+	var loadlevel = function(n) {
+		var n = n-1
+		var level = levels[n]
+		var blocks = []
+		for (var i = 0; i < level.length; i++) {
+			var p = level[i]
+			var b =  Block(p)
+			blocks.push(b)
 		}
+		return blocks
+	}
 		//control speed
 		document.querySelector('#id-input-speed').addEventListener('input',function() {
 			var input = event.target
 			window.fps = Number(input.value)
-			//log(event,input.value)
 		})	
 		
 		var __main=function() {
@@ -80,7 +76,7 @@
 					}
 				}
 				// draw Text
-			game.context.fillText(  "Score : " + score, 10,790);
+				game.context.fillText(  "Score : " + score, 10,790);
 			}
 		}
 		__main()
