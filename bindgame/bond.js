@@ -1,11 +1,14 @@
-var Bond=function(){
-	var image=imageFrompPath('images/bond.png')
-	var o={
+var Bond=function(game){
+	var image = game.imageByname('bond')
+	var o ={
 		image: image,
 		x:  200,
 		y: 700,
 		speed:  10,
 	}
+	o.image = image.image
+	o.width = image.w
+	o.height = image.h
 			//控制边界
 			o.movelimit = function(x) {
 				if(o.x < 0) {

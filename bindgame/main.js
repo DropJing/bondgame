@@ -1,10 +1,10 @@
-	var loadlevel = function(n) {
+	var loadlevel = function(game,n) {
 		var n = n-1
 		var level = levels[n]
 		var blocks = []
 		for (var i = 0; i < level.length; i++) {
 			var p = level[i]
-			var b =  Block(p)
+			var b =  Block(game,p)
 			blocks.push(b)
 		}
 		return blocks
@@ -16,10 +16,17 @@
 		})	
 		
 		var __main=function() {
-			var game = Game(10)
-			var bond = Bond()	
-			var ball = Ball()	
-			var blocks = loadlevel(1)
+			var imagepaths = {
+				block : 'images/block.png',
+				ball : 'images/qiu.png ',
+				bond : 'images/bond.png',
+			}
+
+			var game = Game( 10 , imagepaths , function(game){
+			
+			var bond = Bond(game)	
+			var ball = Ball(game)	
+			var blocks = loadlevel(game,1)
         	var pausd = false//控制暂停的参数
         	var score = 0
 
@@ -39,12 +46,13 @@
         			pausd = !pausd
         		}
         		else if ('1234567'.includes(key) ) {
-        			blocks = loadlevel(Number(key))
+        			blocks = loadlevel(game,Number(key))
         		}
         	})
 
 			//update
 			game.update=function() {
+
 				if (pausd) {
 					return 
 				}
@@ -78,5 +86,8 @@
 				// draw Text
 				game.context.fillText(  "Score : " + score, 10,790);
 			}
+
+			})
+		
 		}
 		__main()

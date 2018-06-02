@@ -1,7 +1,9 @@
-var Game=function(fps) {
+var Game=function(fps,imagepaths,runCallBack) {
+	//imagepaths 是一个对象，存储图片引用还有路径
 	var g={
 		actions: {},
 		keydowns: {},
+		images :{},
 	}
 	var canvas=document.querySelector('#id-canvas')
 	var context=canvas.getContext('2d')
@@ -25,29 +27,67 @@ var Game=function(fps) {
 				g.actions[key]=callback
 			}
 			window.fps = 30
-			var runloop = function() {
-            	//update event
-            	var actions=Object.keys(g.actions)
+             setTimeout(function() {
+					runloop()
+				}, window.fps)
 
-            	for (var i = 0; i <actions.length; i++) {
-            		var key=actions[i]
-            		if(g.keydowns[key])
-            			g.actions[key]()
-            	}
+			var runloop = function() {
+               	//update event
+               	var actions = Object.keys(g.actions)
+
+               	for (var i = 0; i <actions.length; i++) {
+               		var key=actions[i]
+               		if(g.keydowns[key])
+               			g.actions[key]()
+               	}
 				//clare
 				context.clearRect(0,0,canvas.width,canvas.height)
+               log()
 				g.update()
+
 				//draw
 				g.draw()
+
 				setTimeout(function() {
 					runloop()
 				}, window.fps)
-			}
-            //timer
-            setTimeout(function() {
 
-            	runloop()
-            	
-            }, fps)
+			}
+			var loads = []
+            	//图像下标数组
+            	var names = Object.keys(imagepaths)
+                //运行前载入图片
+                for (var i=0 ; i < names.length ; i++) {
+                	let name = names[i]
+                	var imagePath = imagepaths[name]
+                	let img = new Image()
+                	img.src = imagePath
+                	img.onload = function() {
+                		loads.push(1)
+                		g.images[name] = img
+                		if (loads.length == names.length) {
+                			g.run()
+                		}
+                	}
+                }
+
+			 g.imageByname = function(name) {
+				var img = g.images[name]
+				var image = {
+					image : img,
+					w: img.width,
+					h: img.height,
+				}
+                  return image
+              }
+            //timer
+             
+              g.run = function() {
+
+               runCallBack(g)
+				setTimeout(function() {
+					runloop()
+				}, window.fps)
+           }
             return g;
         }

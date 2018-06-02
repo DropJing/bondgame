@@ -1,5 +1,5 @@
-var Ball=function(){
-			var image=imageFrompPath('images/qiu.png')
+var Ball=function(game){
+			var image = game.imageByname('ball')
 			var o={
 				image: image,
 				x:  400,
@@ -8,7 +8,10 @@ var Ball=function(){
 				speedY:5, 
 				fired: false,
 			}
-			o.move=function(){			
+			o.image = image.image
+	        o.width = image.w
+	        o.height = image.h
+			o.move=function(){	
 				if(o.fired) {
 					if(o.x<0||o.x+o.image.width>800)
 					{
@@ -25,6 +28,7 @@ var Ball=function(){
 
 			}
 			o.fire=function() {
+               log(o.fired)
 				o.fired=true
 			}
 

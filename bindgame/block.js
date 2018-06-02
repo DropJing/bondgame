@@ -1,17 +1,18 @@
-var Block=function(position){
+var Block=function(game,position){
 	//position [0,0]
 	var p = position
-	var image=imageFrompPath('images/block.png')
+	var image = game.imageByname('block')
 	
 	var o={
 		image: image,
 		x: p[0] ,
 		y: p[1] ,
-		width: 47,
-		height: 43,
 		alive: true,
 		lifes: p[2] || 1 ,
 	}
+	o.image = image.image
+	o.width = image.w
+	o.height = image.h
 	o.kill = function() {
 		o.lifes--
 		if (o.lifes <= 0) {

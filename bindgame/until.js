@@ -1,8 +1,5 @@
 	var e = sel => document.querySelector(sel)
-	var log = function(s) {
-		e('#id-input-log').value += '\n' + s
-	}
-
+	var log = console.log.bind(console)
 	var imageFrompPath=function(path){
 		var img=new Image();
 		img.src=path
