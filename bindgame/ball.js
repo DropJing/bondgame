@@ -28,10 +28,14 @@ var Ball=function(game){
 
 			}
 			o.fire=function() {
-               log(o.fired)
+                log(o.fired)
 				o.fired=true
 			}
 
-
-			return o
+       o.hasPoint = function(x,y) {
+         var xIN = x >= o.x && x <= o.x + o.width
+         var yIN = y >= o.y && y <= o.y + o.height
+         return xIN && yIN
+       }
+       			return o
 		}

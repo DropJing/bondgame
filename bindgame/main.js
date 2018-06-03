@@ -72,9 +72,41 @@
 					}
 				}
 			}
+			//鼠标拖拽
+		var enableDrag = false
+		window.addEventListener('mousedown',function (event){
+			var x = event.offsetX
+			var y = event.offsetY
+			log(x,y,'down')
+			if (ball.hasPoint(x,y)) {
+                    enableDrag = true
+			}
+
+		})
+		window.addEventListener('mousemove',function (event){
+			var x = event.offsetX
+			var y = event.offsetY
+			//log(x,y,'move')
+			if(enableDrag) {
+				log(x,y,'move')
+				ball.x = x
+				ball.y = y
+			}
+
+		})
+		window.addEventListener('mouseup',function (event){
+			var x = event.offsetX
+			var y = event.offsetY
+			log(x,y,'up')
+			 enableDrag = false
+
+		})
 			//draw
 
 			game.draw=function() {
+				//draw fillrect 填充矩形的意思
+				game.context.fillStyle = "#554"
+				game.context.fillRect(0,0,800,800);
 				game.drawImage(bond)
 				game.drawImage(ball)
 				for (var i = 0; i < blocks.length; i++) {
@@ -88,6 +120,6 @@
 			}
 
 			})
-		
+
 		}
 		__main()

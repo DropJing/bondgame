@@ -83,7 +83,6 @@ var Game=function(fps,imagepaths,runCallBack) {
             //timer
              
               g.run = function() {
-
                runCallBack(g)
 				setTimeout(function() {
 					runloop()
