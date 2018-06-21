@@ -23,10 +23,10 @@
 			}
 
 			var game = Game( 10 , imagepaths , function(game){
-			
-			var bond = Bond(game)	
-			var ball = Ball(game)	
-			var blocks = loadlevel(game,1)
+				
+				var bond = Bond(game)	
+				var ball = Ball(game)	
+				var blocks = loadlevel(game,1)
         	var pausd = false//控制暂停的参数
         	var score = 0
 
@@ -73,19 +73,19 @@
 				}
 			}
 			//鼠标拖拽
-		var enableDrag = false
-		window.addEventListener('mousedown',function (event){
-			var x = event.offsetX
-			var y = event.offsetY
-			log(x,y,'down')
-			if (ball.hasPoint(x,y)) {
-                    enableDrag = true
-			}
+			var enableDrag = false
+			window.addEventListener('mousedown',function (event){
+				var x = event.offsetX
+				var y = event.offsetY
+				log(x,y,'down')
+				if (ball.hasPoint(x,y)) {
+					enableDrag = true
+				}
 
-		})
-		window.addEventListener('mousemove',function (event){
-			var x = event.offsetX
-			var y = event.offsetY
+			})
+			window.addEventListener('mousemove',function (event){
+				var x = event.offsetX
+				var y = event.offsetY
 			//log(x,y,'move')
 			if(enableDrag) {
 				log(x,y,'move')
@@ -94,13 +94,13 @@
 			}
 
 		})
-		window.addEventListener('mouseup',function (event){
-			var x = event.offsetX
-			var y = event.offsetY
-			log(x,y,'up')
-			 enableDrag = false
+			window.addEventListener('mouseup',function (event){
+				var x = event.offsetX
+				var y = event.offsetY
+				log(x,y,'up')
+				enableDrag = false
 
-		})
+			})
 			//draw
 
 			game.draw=function() {
@@ -119,7 +119,7 @@
 				game.context.fillText(  "Score : " + score, 10,790);
 			}
 
-			})
+		})
 
 		}
 		__main()
