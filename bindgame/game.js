@@ -27,9 +27,9 @@ var Game=function(fps,imagepaths,runCallBack) {
 				g.actions[key]=callback
 			}
 			window.fps = 30
-             setTimeout(function() {
-					runloop()
-				}, window.fps)
+			setTimeout(function() {
+				runloop()
+			}, window.fps)
 
 			var runloop = function() {
                	//update event
@@ -42,7 +42,7 @@ var Game=function(fps,imagepaths,runCallBack) {
                	}
 				//clare
 				context.clearRect(0,0,canvas.width,canvas.height)
-               log()
+				log()
 				g.update()
 
 				//draw
@@ -71,22 +71,22 @@ var Game=function(fps,imagepaths,runCallBack) {
                 	}
                 }
 
-			 g.imageByname = function(name) {
-				var img = g.images[name]
-				var image = {
-					image : img,
-					w: img.width,
-					h: img.height,
-				}
-                  return image
-              }
+                g.imageByname = function(name) {
+                	var img = g.images[name]
+                	var image = {
+                		image : img,
+                		w: img.width,
+                		h: img.height,
+                	}
+                	return image
+                }
             //timer
-             
-              g.run = function() {
-               runCallBack(g)
-				setTimeout(function() {
-					runloop()
-				}, window.fps)
-           }
+            
+            g.run = function() {
+            	runCallBack(g)
+            	setTimeout(function() {
+            		runloop()
+            	}, window.fps)
+            }
             return g;
         }

@@ -10,7 +10,7 @@ var Block=function(game,position){
 		alive: true,
 		lifes: p[2] || 1 ,
 	}
-	  o.image = image.image
+	o.image = image.image
 	o.width = image.w
 	o.height = image.h
 	o.kill = function() {
